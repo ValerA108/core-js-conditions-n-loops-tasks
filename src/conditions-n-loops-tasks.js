@@ -21,8 +21,8 @@
  *  0  => true
  *  -5 => false
  */
-function isPositive(/* number */) {
-  throw new Error('Not implemented');
+function isPositive(number) {
+  return number >= 0;
 }
 
 /**
@@ -37,9 +37,18 @@ function isPositive(/* number */) {
  *  1, 2, 3       => 3
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
+ * 1) return a;  // Возвращаем a, если оно больше или равно другим двум числам
+ * 2) return b;  // Возвращаем b, если оно больше или равно другим двум числам
+ * 3) return c;  // Если ни одно из предыдущих условий не сработало, значит c - наибольшее
  */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  if (a >= b && a >= c) {
+    return a;
+  }
+  if (b >= a && b >= c) {
+    return b;
+  }
+  return c;
 }
 
 /**
@@ -59,9 +68,28 @@ function getMaxNumber(/* a, b, c */) {
  * {x: 2, y: 1}, {x: 2, y: 8} => true
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
+ *
+ * 1) Проверяем, находятся ли ферзь и король на одной вертикали (одинаковые x)
+ * 2) Проверяем, находятся ли ферзь и король на одной горизонтали (одинаковые y)
+ * 3) Проверяем, находятся ли ферзь и король на одной диагонали
+ * 4) Это условие выполняется, если разность x и y для ферзя и короля одинаковая
+ *
+ * Если ни одно из условий не выполнено, ферзь не может побить короля
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  if (queen.x === king.x) {
+    return true;
+  }
+
+  if (queen.y === king.y) {
+    return true;
+  }
+
+  if (Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y)) {
+    return true;
+  }
+
+  return false;
 }
 
 /**
@@ -81,9 +109,22 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 3   => true
  *  2, 2, 5   => false
  *  3, 0, 3   => false
+ *
+ * 1) Проверяем, что длины сторон положительные
+ * 2) Проверяем условие существования треугольника
+ * 3) Проверяем, является ли треугольник равнобедренным
+ *
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  if (a <= 0 || b <= 0 || c <= 0) {
+    return false;
+  }
+
+  if (a + b <= c || a + c <= b || b + c <= a) {
+    return false;
+  }
+
+  return a === b || b === c || a === c;
 }
 
 /**
@@ -99,6 +140,8 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  5   => V
  *  10  => X
  *  26  => XXVI
+ *
+ *
  */
 function convertToRomanNumerals(/* num */) {
   throw new Error('Not implemented');
@@ -135,8 +178,19 @@ function convertNumberToString(/* numberStr */) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  let left = 0;
+  let right = str.length - 1;
+
+  while (left < right) {
+    if (str[left] !== str[right]) {
+      return false;
+    }
+    left += 1;
+    right -= 1;
+  }
+
+  return true;
 }
 
 /**
@@ -153,8 +207,14 @@ function isPalindrome(/* str */) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === letter) {
+      return i;
+    }
+  }
+
+  return -1;
 }
 
 /**
@@ -172,8 +232,17 @@ function getIndexOf(/* str, letter */) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  let n = Math.abs(num);
+
+  while (n > 0) {
+    if (n % 10 === digit) {
+      return true;
+    }
+    n = Math.floor(n / 10);
+  }
+
+  return false;
 }
 
 /**
